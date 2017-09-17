@@ -31,6 +31,7 @@ public class PlayerRaycast : MonoBehaviour {
         if (Physics.Raycast(ray, out hit))
         {
             DDRCube dCopy = Instantiate<DDRCube>(ddrCube);
+            dCopy.transform.rotation = transform.rotation;
             dCopy.setDestination(hit.point);
             return true;
         }
