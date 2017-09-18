@@ -93,3 +93,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  alt: {fileID: 2100000, guid: 0104aa1adc3d758478db16851de01f24, type: 2}

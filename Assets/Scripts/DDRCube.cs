@@ -5,15 +5,16 @@ using UnityEngine;
 public class DDRCube : MonoBehaviour {
     private Camera cam;
     private Vector3 startUp, startLeft, startDown, startRight;
+    private Quaternion rotUp, rotDown, rotLeft, rotRight;
     public Arrow arrow;
     public Vector3 destination;
     // Use this for initialization
     void Start () {
         cam = Camera.main;
-        Quaternion rotUp = Quaternion.AngleAxis(180f, Vector3.forward);
-        Quaternion rotDown = Quaternion.AngleAxis(0f, Vector3.forward);
-        Quaternion rotRight = Quaternion.AngleAxis(-90f, Vector3.forward);
-        Quaternion rotLeft = Quaternion.AngleAxis(90f, Vector3.forward);
+        rotUp = Quaternion.AngleAxis(180f, Vector3.forward);
+        rotDown = Quaternion.AngleAxis(0f, Vector3.forward);
+        rotRight = Quaternion.AngleAxis(-90f, Vector3.forward);
+        rotLeft = Quaternion.AngleAxis(90f, Vector3.forward);
         startRight = cam.ViewportToWorldPoint(new Vector3(0, 0.5f, 0.5f));
         startLeft = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, 0.5f));
         startDown = cam.ViewportToWorldPoint(new Vector3(0.5f, 0, 0.5f));
@@ -67,6 +68,8 @@ public class DDRCube : MonoBehaviour {
     {
         destination = dest;
     }
+
+
 	// Update is called once per frame
 	void Update () {
 		if (destination != null)

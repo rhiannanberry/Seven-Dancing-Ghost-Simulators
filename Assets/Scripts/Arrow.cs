@@ -9,6 +9,8 @@ public class Arrow : MonoBehaviour {
     private bool destArr = false;
     [SerializeField]
     private float speed = 1f;
+    [SerializeField]
+    private Material alt;
 	// Use this for initialization
 	void Start () {
         startPos = transform.position;
@@ -31,13 +33,22 @@ public class Arrow : MonoBehaviour {
     public void setDestArr(bool val)
     {
         destArr = val;
+        if (val)
+        {
+            GetComponent<Renderer>().material = alt;
+        }
     }
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (!destArr)
         {
+            //TODO: equilize speed b/t vertical and horizontal
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * speed);
+            if (transform.position == destination)
+            {
+                transform.position = startPos;
+            }
             Debug.DrawLine(startPos, destination);
             Debug.DrawRay(startPos, direction, Color.green);
 
