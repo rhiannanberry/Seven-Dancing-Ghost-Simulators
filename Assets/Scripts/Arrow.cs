@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour {
     private Vector3 destination;
+    private bool destHit = false;
     private Vector3 direction;
     private Vector3 startPos;
+    private KeyCode arrowDir;
     private bool destArr = false;
     [SerializeField]
-    private float time = 1f; //this should be TIME it takes to get to destination so all arrows match on all screen ratios
+    private float time = 2f; //this should be TIME it takes to get to destination so all arrows match on all screen ratios
     [SerializeField]
     private float speed;
     private Material alt;
@@ -22,6 +24,7 @@ public class Arrow : MonoBehaviour {
         destination = dest;
         direction = destination - transform.position;
         speed = direction.magnitude / time;
+        direction = direction.normalized;
 
     }
 
@@ -30,26 +33,47 @@ public class Arrow : MonoBehaviour {
         transform.rotation = Camera.main.transform.rotation * adj;
     }
 
-    public void setDestArr(bool val)
+    public void setDestAndDir(bool val, KeyCode dir)
     {
+        arrowDir = dir;
         destArr = val;
         if (val)
         {
             GetComponent<Renderer>().material = alt;
         }
     }
+    public void resetPosition()
+    {
+        transform.position = startPos;
+        destHit = false;
+    }
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (!destArr)
         {
-            transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * speed);
-            if (transform.position == destination)
+            if (transform.position == destination || destHit)
             {
-                transform.position = startPos;
+                destHit = true;
+                transform.Translate(direction * Time.deltaTime * speed, Space.World);
+                //transform.position = startPos;
+            } else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * speed);
             }
-            Debug.DrawLine(startPos, destination);
-            Debug.DrawRay(startPos, direction, Color.green);
+        }
+    }
+
+    void OnTriggerStay(Collider collider)
+    {
+        if (destArr && collider.tag == "Arrow")
+        {
+            if (Input.GetKeyDown(arrowDir))
+            {
+                Debug.Log(arrowDir);
+
+                (collider.GetComponentInParent<Arrow>()).resetPosition();
+            }
         }
     }
 }

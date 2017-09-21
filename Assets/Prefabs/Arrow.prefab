@@ -22,9 +22,11 @@ GameObject:
   - component: {fileID: 33699417982656144}
   - component: {fileID: 23607186512144860}
   - component: {fileID: 114552870980748982}
+  - component: {fileID: 65503575857312672}
+  - component: {fileID: 54685013358281756}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1327646336483344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.025099277, y: 0.68, z: -3.149}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,6 +83,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1327646336483344}
   m_Mesh: {fileID: 4300000, guid: e8391776d4d41474da31961fc2427c9b, type: 3}
+--- !u!54 &54685013358281756
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1327646336483344}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65503575857312672
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1327646336483344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 0.006}
+  m_Center: {x: -9.313226e-10, y: -0.01639691, z: -0.0000000011641532}
 --- !u!114 &114552870980748982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,5 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c026eb6099d8be4d8d55499448477df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 1
   speed: 1
-  alt: {fileID: 2100000, guid: 0104aa1adc3d758478db16851de01f24, type: 2}

@@ -13,10 +13,10 @@ public class DDRCube : MonoBehaviour {
         cam = Camera.main;
         rotUp = Quaternion.AngleAxis(180f, Vector3.forward);
         rotDown = Quaternion.AngleAxis(0f, Vector3.forward);
-        rotRight = Quaternion.AngleAxis(-90f, Vector3.forward);
-        rotLeft = Quaternion.AngleAxis(90f, Vector3.forward);
-        startRight = cam.ViewportToWorldPoint(new Vector3(0, 0.5f, 0.5f));
-        startLeft = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, 0.5f));
+        rotLeft = Quaternion.AngleAxis(-90f, Vector3.forward);
+        rotRight = Quaternion.AngleAxis(90f, Vector3.forward);
+        startLeft = cam.ViewportToWorldPoint(new Vector3(0, 0.5f, 0.5f));
+        startRight = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, 0.5f));
         startDown = cam.ViewportToWorldPoint(new Vector3(0.5f, 0, 0.5f));
         startUp = cam.ViewportToWorldPoint(new Vector3(0.5f, 1, 0.5f));
 
@@ -24,10 +24,10 @@ public class DDRCube : MonoBehaviour {
         Arrow fLeft = Instantiate<Arrow>(arrow);
         Arrow fUp = Instantiate<Arrow>(arrow);
         Arrow fDown = Instantiate<Arrow>(arrow);
-        fRight.setDestArr(true);
-        fLeft.setDestArr(true);
-        fUp.setDestArr(true);
-        fDown.setDestArr(true);
+        fRight.setDestAndDir(true, KeyCode.D);
+        fLeft.setDestAndDir(true, KeyCode.A);
+        fUp.setDestAndDir(true, KeyCode.W);
+        fDown.setDestAndDir(true, KeyCode.S);
         fRight.transform.position = destination;
         fLeft.transform.position = destination;
         fUp.transform.position = destination;
@@ -71,10 +71,6 @@ public class DDRCube : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
-		if (destination != null)
-        {
-            Debug.DrawLine(cam.transform.position, destination);
-        }
-	}
+	void Update () {//when evalcuating distance just use sqrmag to save performance
+    }
 }
