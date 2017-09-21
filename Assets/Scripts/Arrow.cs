@@ -8,26 +8,26 @@ public class Arrow : MonoBehaviour {
     private Vector3 startPos;
     private bool destArr = false;
     [SerializeField]
-    private float speed = 1f;
+    private float time = 1f; //this should be TIME it takes to get to destination so all arrows match on all screen ratios
     [SerializeField]
+    private float speed;
     private Material alt;
 	// Use this for initialization
 	void Start () {
         startPos = transform.position;
-        
-        //controller = GetComponent<CharacterController>();
 	}
 	
     public void setDestination(Vector3 dest)
     {
         destination = dest;
         direction = destination - transform.position;
+        speed = direction.magnitude / time;
+
     }
 
     public void setRotation(Quaternion adj)
     {
         transform.rotation = Camera.main.transform.rotation * adj;
-        //transform.rotation = transform.rotation * adj;
     }
 
     public void setDestArr(bool val)
@@ -43,7 +43,6 @@ public class Arrow : MonoBehaviour {
 	void FixedUpdate () {
 		if (!destArr)
         {
-            //TODO: equilize speed b/t vertical and horizontal
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * speed);
             if (transform.position == destination)
             {
@@ -51,8 +50,6 @@ public class Arrow : MonoBehaviour {
             }
             Debug.DrawLine(startPos, destination);
             Debug.DrawRay(startPos, direction, Color.green);
-
-            //controller.SimpleMove(destination * speed);
         }
     }
 }
