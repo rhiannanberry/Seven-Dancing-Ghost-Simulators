@@ -1,0 +1,148 @@
+fileFormatVersion: 2
+guid: a21869133233d8842a4098ed9c40415d
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Door
+    100002: DoorRim
+    100004: Drain
+    100006: //RootNode
+    100008: ShowerHead
+    100010: ShowerDoor
+    100012: ShowerWalls
+    400000: Door
+    400002: DoorRim
+    400004: Drain
+    400006: //RootNode
+    400008: ShowerHead
+    400010: ShowerDoor
+    400012: ShowerWalls
+    2100000: ShowerPlastic_Shade
+    2100002: ShowerPlastic_Shade1
+    2100004: ShowerPlastic
+    2100006: ShowerPlastic_Shade2
+    2100008: Metal_Base
+    2100010: Metal_Shade
+    2100012: Metal_Light
+    2100014: Glass
+    2300000: Door
+    2300002: DoorRim
+    2300004: Drain
+    2300006: //RootNode
+    2300008: ShowerHead
+    2300010: ShowerDoor
+    2300012: ShowerWalls
+    3300000: Door
+    3300002: DoorRim
+    3300004: Drain
+    3300006: //RootNode
+    3300008: ShowerHead
+    3300010: ShowerDoor
+    3300012: ShowerWalls
+    4300000: ShowerWalls
+    4300002: Drain
+    4300004: ShowerHead
+    4300006: DoorRim
+    4300008: Door
+    4300010: ShowerDoor
+    7400000: Default Take
+    9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 583dd168bc0958b45b40cfc3958481d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_Base
+    second: {fileID: 2100000, guid: 7cbe4a1f90b1bfd46840bc8375df95ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShowerPlastic
+    second: {fileID: 2100000, guid: 36eea1bb8c1f685459158c9081c54a7c, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

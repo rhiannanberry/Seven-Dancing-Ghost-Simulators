@@ -1,0 +1,261 @@
+fileFormatVersion: 2
+guid: caf44f122912a744b90393582d1fbb27
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Door
+    100004: DoorRim
+    100006: Drain
+    100008: Mirror
+    100010: ShowerHead
+    100012: ShowerWalls
+    100014: Sink
+    100016: Walls
+    100018: Window
+    100020: Cube
+    100022: faucet
+    100024: lights
+    100026: Rug
+    400000: //RootNode
+    400002: Door
+    400004: DoorRim
+    400006: Drain
+    400008: Mirror
+    400010: ShowerHead
+    400012: ShowerWalls
+    400014: Sink
+    400016: Walls
+    400018: Window
+    400020: Cube
+    400022: faucet
+    400024: lights
+    400026: Rug
+    2300000: Door
+    2300002: DoorRim
+    2300004: Drain
+    2300006: Mirror
+    2300008: ShowerHead
+    2300010: ShowerWalls
+    2300012: Sink
+    2300014: Walls
+    2300016: Window
+    2300018: Cube
+    2300020: faucet
+    2300022: lights
+    2300024: Rug
+    3300000: Door
+    3300002: DoorRim
+    3300004: Drain
+    3300006: Mirror
+    3300008: ShowerHead
+    3300010: ShowerWalls
+    3300012: Sink
+    3300014: Walls
+    3300016: Window
+    3300018: Cube
+    3300020: faucet
+    3300022: lights
+    3300024: Rug
+    4300000: Sink
+    4300002: Mirror
+    4300004: Walls
+    4300006: ShowerWalls
+    4300008: Door
+    4300010: DoorRim
+    4300012: ShowerHead
+    4300014: Drain
+    4300016: Window
+    4300018: Cube
+    4300020: faucet
+    4300022: lights
+    4300024: Rug
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FloorCeiling
+    second: {fileID: 2100000, guid: 9f458984779b8574293ad690e90578f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 59d2f8a493f60e841b163eb92734c682, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Base
+    second: {fileID: 2100000, guid: b67a83002d24f6f43a3bbf8c29e66fcc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Light
+    second: {fileID: 2100000, guid: 11e8fd8cd7ee90a48b44b8f907b06ac8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Shade
+    second: {fileID: 2100000, guid: 6201c67dfb3daaf44a06c4492309a5e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mirror
+    second: {fileID: 2100000, guid: 19237ef08c5d57f408bdedadd03486cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rug
+    second: {fileID: 2100000, guid: 8c5382ae286ac604fb1801f39de42aae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShowerPlastic
+    second: {fileID: 2100000, guid: b571d0d383c0dc54b9a598e9ad61c728, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShowerPlastic Shade
+    second: {fileID: 2100000, guid: 4ff2dea6efd488a49814a80a5a99d267, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShowerPlastic Shade1
+    second: {fileID: 2100000, guid: 32a0cc9a0ae84dc44a8fa7886d4b664b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShowerPlastic Shade2
+    second: {fileID: 2100000, guid: 08fd9ed46d6cdd74e833efed92cb8dab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: 832b883c8026e6e4b968c91a4a104baf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: light backing
+    second: {fileID: 2100000, guid: e6d3b47caedb32c4289c12bf30e68fef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lightbulb1
+    second: {fileID: 2100000, guid: 0cafd05942ade6e40917c5c43703b4ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lightbulb2
+    second: {fileID: 2100000, guid: eb3f86a8fa76ee24a9336ad7760b5922, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lightbulb4
+    second: {fileID: 2100000, guid: f3ca915338f779f49809461d2c86dc5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink black
+    second: {fileID: 2100000, guid: c28b5411223b2ed40a33ad6439d29c48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink metal
+    second: {fileID: 2100000, guid: 69e8f2bddb952304bbc4a9c39167f8e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink plastic
+    second: {fileID: 2100000, guid: 76f902418cd274648a79e39aec3fd697, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink plastic 2
+    second: {fileID: 2100000, guid: e0af5de89f9b59b47bd8cfbc9f92ddaf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sink wood
+    second: {fileID: 2100000, guid: 62cf035b75b0a7041bc3236d512df20e, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

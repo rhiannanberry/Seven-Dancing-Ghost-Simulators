@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: 5c85ad27f8429b54da882163924b15c6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Door
+    100004: DoorRim
+    100006: Drain
+    100008: lights
+    100010: Mirror
+    100012: Rug
+    100014: ShowerHead
+    100016: ShowerWalls
+    100018: Sink
+    100020: Walls
+    100022: //RootNode
+    100024: Window
+    400000: Cube
+    400002: Door
+    400004: DoorRim
+    400006: Drain
+    400008: lights
+    400010: Mirror
+    400012: Rug
+    400014: ShowerHead
+    400016: ShowerWalls
+    400018: Sink
+    400020: Walls
+    400022: //RootNode
+    400024: Window
+    2100000: ShowerPlastic_Shade
+    2100002: ShowerPlastic_Shade1
+    2100004: ShowerPlastic
+    2100006: ShowerPlastic_Shade2
+    2100008: Metal_Base
+    2100010: Metal_Shade
+    2100012: Metal_Light
+    2100014: Glass
+    2100016: Walls
+    2100018: FloorCeiling
+    2100020: Mirror
+    2100022: sink_plastic
+    2100024: sink_metal
+    2100026: sink_black
+    2100028: sink_wood
+    2100030: light_backing
+    2100032: lightbulb1
+    2100034: lightbulb2
+    2100036: Rug
+    2100038: Material
+    2300000: Cube
+    2300002: Door
+    2300004: DoorRim
+    2300006: Drain
+    2300008: lights
+    2300010: Mirror
+    2300012: Rug
+    2300014: ShowerHead
+    2300016: ShowerWalls
+    2300018: Sink
+    2300020: Walls
+    2300022: Window
+    3300000: Cube
+    3300002: Door
+    3300004: DoorRim
+    3300006: Drain
+    3300008: lights
+    3300010: Mirror
+    3300012: Rug
+    3300014: ShowerHead
+    3300016: ShowerWalls
+    3300018: Sink
+    3300020: Walls
+    3300022: Window
+    4300000: ShowerWalls
+    4300002: Drain
+    4300004: ShowerHead
+    4300006: DoorRim
+    4300008: Door
+    4300010: Walls
+    4300012: Mirror
+    4300014: Sink
+    4300016: Window
+    4300018: lights
+    4300020: Rug
+    4300022: Cube
+    7400000: Default Take
+    9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
