@@ -1,6 +1,7 @@
 ﻿Shader "Custom/PaperUnfolded" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
+		_ReverseChroma("Reverse Chromakey", Color) = (1,0,0,0)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
@@ -27,6 +28,7 @@
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _Color;
+		fixed4 _ReverseChroma;
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
 		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -42,11 +44,17 @@
 			float2 mirrorTexCoords = length-abs(t-length);
 			fixed4 c = tex2D (_MainTex, mirrorTexCoords) * _Color;
 			
-			o.Albedo = c.rgb;
+			float rVal = c.r - _ReverseChroma.r; //0
+			float gVal = c.g - _ReverseChroma.g; //1
+			float bVal = c.b - _ReverseChroma.b; //1
+
+			float sumVal = rVal + gVal + bVal; //2
+
+			o.Albedo = _Color.rgb;
 			// Metallic and smoothness come from slider variables
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
-			o.Alpha = 1 - c.r;
+			o.Alpha = (sumVal == 0) ? 1 : 0;
 		}
 		ENDCG
 	}

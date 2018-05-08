@@ -5,7 +5,6 @@ using UnityEngine;
 public class Line : MonoBehaviour {
 	public LineRenderer lr;
 	List<Vector3> points;
-	
 	public void UpdateLine(Vector3 mousePos) {
 		if (points == null) {
 			points = new List<Vector3>();
