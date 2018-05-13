@@ -30,7 +30,7 @@ public class LineCreator : MonoBehaviour {
 			bottomLeft.y = Mathf.Min(bottomLeft.y, Input.mousePosition.y);
 			topRight.x = Mathf.Max(topRight.x, Input.mousePosition.x);
 			topRight.y = Mathf.Max(topRight.y, Input.mousePosition.y);
-			Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane+1f));
+			Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane+1.49f));
 			activeLine.UpdateLine(mousePos);
 		}
 	}
@@ -41,6 +41,7 @@ public class LineCreator : MonoBehaviour {
 			snowflake.Apply();
 			snowflake.FloodFillArea(0,0, Color.red);
 			snowflake.Apply();
+			activeLine.gameObject.layer += 1; //moved to drawn layer so it's hidden from main camera
 			activeLine = null;
 			Debug.Log("BottomLeft Screenspace: " + bottomLeft + ", TopRight: " + topRight);
 			updateTexture = false;
