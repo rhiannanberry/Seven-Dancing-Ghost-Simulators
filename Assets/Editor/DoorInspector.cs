@@ -11,9 +11,6 @@ public class DoorInspector : Editor {
 
 		Vector3 widthHeight;
 
-		Vector3 scaledWidth = door.transform.localScale.x*door.width*Vector3.right;
-		Vector3 scaledHeight = door.transform.localScale.y*door.height*Vector3.up;
-
 		//these might need to be added to the door object as private parameters
 		Vector3 bLeft = handleTransform.TransformPoint(Vector3.zero);
 		Vector3 tLeft =  handleTransform.TransformPoint(door.height*Vector3.up);
@@ -33,8 +30,9 @@ public class DoorInspector : Editor {
 			Undo.RecordObject(door, "Scale door");
 			EditorUtility.SetDirty(door);
 			Vector3 diag = handleTransform.InverseTransformPoint(widthHeight);
-			door.width = diag.x;
-			door.height = diag.y;
+			door.ClampedManualUpdate(diag.x, diag.y);
+			//door.width = diag.x;
+			//door.height = diag.y;
 		}
 	}
 }

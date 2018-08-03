@@ -12,9 +12,6 @@ public class WallInspector : Editor {
 
 		Vector3 widthHeight;
 
-		Vector3 scaledWidth = wall.transform.localScale.x*wall.width*Vector3.right;
-		Vector3 scaledHeight = wall.transform.localScale.y*wall.height*Vector3.up;
-
 		//these might need to be added to the wall object as private parameters
 		Vector3 bLeft = handleTransform.TransformPoint(Vector3.zero);
 		Vector3 tLeft =  handleTransform.TransformPoint(wall.height*Vector3.up);

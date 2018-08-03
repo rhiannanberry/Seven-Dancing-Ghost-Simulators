@@ -9,6 +9,9 @@ public class Wall : MonoBehaviour {
 	//wall "start position" represented by the gameobject position
 	//probably add options for features like doors and windows later
 
+	private Door[] doors;
+
+
 	private MeshFilter mf;
 	private Mesh mesh;
 	
@@ -91,9 +94,58 @@ public class Wall : MonoBehaviour {
 		Vector3 tRight = width*Vector3.right+height*Vector3.up;
 		//these might need to be added to the wall object as private parameters
 		Vector3[] verts = new Vector3[4];
-		if (transform.childCount > 0) { // just assume a door for now
-			verts = new Vector3[8];
+	
+		ArrayList tempVertList = new ArrayList();
+		doors = transform.GetComponentsInChildren<Door>();
+		if (doors.Length > 0) {
+			Debug.Log("DOORS");
+			//add one for windows later
+			tempVertList.Add(bLeft);
+			SortDoors();
+
+			foreach(Door door in doors) {
+				//vertical lines going up
+				//right side
+				tempVertList.Add(door.transform.localPosition);
+				tempVertList.Add(door.transform.localPosition + Vector3.right*door.width);
+			}
+
+			tempVertList.Add(bRight);
+			Debug.Log("First row: " + tempVertList.Count);
+
+			int doorCount = 0;
+			foreach(Door door in doors) {
+				if (doorCount == 0) {
+					tempVertList.Add(Vector3.up*door.height);
+				}
+				tempVertList.Add(door.transform.localPosition + Vector3.up*door.height); //top right of door
+				//top left of door
+				tempVertList.Add(door.transform.localPosition + Vector3.right*door.width + Vector3.up*door.height);
+				
+				if (doorCount == doors.Length-1) {
+					tempVertList.Add(bRight + Vector3.up*door.height);
+				}
+				doorCount++;
+			}
+			Debug.Log("Second row: " + tempVertList.Count);
+
+			tempVertList.Add(tLeft);
+			foreach(Door door in doors) {
+				tempVertList.Add(tLeft + Vector3.right*door.transform.localPosition.x);
+				tempVertList.Add(tLeft + Vector3.right*(door.transform.localPosition.x+door.width));
+				//top left of door
+			}
+
+			tempVertList.Add(tRight);			
+			Debug.Log(tempVertList.Count);
+			
+			
+			verts = (Vector3[])tempVertList.ToArray(typeof(Vector3));
+			mesh.vertices = verts;
+			return;
 		}
+
+		
 	
 		verts[0] = bLeft;
 		verts[1] = bRight;
@@ -102,10 +154,17 @@ public class Wall : MonoBehaviour {
 
 		if (transform.childCount > 0) { // just assume a door for now
 			Door door = GetComponentInChildren<Door>();
-			verts[4] = door.transform.localPosition;
-			verts[5] = door.transform.localPosition + Vector3.right*door.width;
-			verts[6] = door.transform.localPosition + Vector3.up*door.height;
-			verts[7] = door.transform.localPosition + Vector3.right*door.width + Vector3.up*door.height;
+			float locClampedX = Mathf.Clamp(door.transform.localPosition.x, 0, width-door.width);
+			float locClampedY = 0;
+			Vector3 locClamped = new Vector3(locClampedX, locClampedY, 0);
+
+			float widthClamped = Mathf.Clamp(locClampedX + door.width, 0, width);
+			float heightClamped = Mathf.Clamp(locClampedY + door.height, 0, height);
+
+			verts[4] = locClamped;
+			verts[5] = new Vector3(widthClamped, locClampedY);
+			verts[6] = new Vector3(locClampedX, heightClamped);//locClamped + Vector3.up*door.height;
+			verts[7] = new Vector3(widthClamped, heightClamped);
 		}
 		
 		mesh.vertices = verts;
@@ -122,31 +181,48 @@ public class Wall : MonoBehaviour {
 			tris[4] = 3;
 			tris[5] = 1;
 		} else {
-			tris = new int[18];
+			int faceColumnCount = 2*doors.Length + 1;
+			int lineColumnCount = faceColumnCount + 1;
+			int faceRowCount = 2;
+			int lineRowCount = faceRowCount + 1;
 
-			tris[0] = 0;
-			tris[1] = 6;
-			tris[2] = 4;
+			int triVertCount = (faceColumnCount * faceRowCount - doors.Length)*2*3;
+			Debug.Log(triVertCount);
+			tris = new int[triVertCount];
+			int triVertNum = 0;
+			for (int lineRow = 0; lineRow < 2; lineRow++) {
+				for (int lineCol = 0; lineCol < faceColumnCount; lineCol++) {
+					if(lineCol%2 == 0 || lineRow != 0) { // we skip odd ones
+						//bot left tri
+						int botLeft = lineRow*lineColumnCount + lineCol;
+						int topLeft = (lineRow + 1)*lineColumnCount + lineCol;
+						int botRight = botLeft + 1;
+						int topRight = topLeft + 1;
+						tris[triVertNum] = botLeft;
+						triVertNum++;
+						tris[triVertNum] = topLeft;
+						triVertNum++;
+						tris[triVertNum] = botRight;
+						triVertNum++;
 
-			tris[3] = 0;
-			tris[4] = 2;
-			tris[5] = 6;
 
-			tris[6] = 6;
-			tris[7] = 2;
-			tris[8] = 3;
+						//top right tri
+						tris[triVertNum] = topLeft;
+						triVertNum++;
+						tris[triVertNum] = topRight;
+						triVertNum++;
+						tris[triVertNum] = botRight;
+						triVertNum++;
 
-			tris[9] = 6;
-			tris[10] = 3;
-			tris[11] = 7;
+						Debug.Log("Bottom Leftt tri: (" + botLeft + ", " + topLeft + ", " + botRight + ")");
+						Debug.Log("Top right tri: (" + botRight + ", " + topLeft + ", " + topRight + ")");
 
-			tris[12] = 7;
-			tris[13] = 3;
-			tris[14] = 1;
 
-			tris[15] = 5;
-			tris[16] = 7;
-			tris[17] = 1;
+
+					}
+				}
+			}
+			Debug.Log("End trivertnum: " + triVertNum);
 
 		}
 
@@ -155,7 +231,28 @@ public class Wall : MonoBehaviour {
 
 	private void UpdateNormals() {
 		Debug.Log("UPDATING NORMALS");
-		mesh.RecalculateNormals();
-		
+		Vector3[] norms = new Vector3[mesh.vertexCount];
+		for (int i = 0; i < mesh.vertexCount;i++) {
+			norms[i] = -1*Vector3.forward;
+
+		}
+		mesh.normals = norms;	
 	}
+
+	private void SortDoors() {
+		for(int i = 1; i < doors.Length; i++) {
+			for(int j = i-1; j >= 0; j--) {
+				if (doors[j+1].transform.localPosition.x < doors[j].transform.localPosition.x) {
+					//swap
+					Door temp = doors[j+1];
+					doors[j+1] = doors[j];
+					doors[j] = temp;
+				} else {
+					break;
+				}
+			}
+		}
+	}
+
+
 }

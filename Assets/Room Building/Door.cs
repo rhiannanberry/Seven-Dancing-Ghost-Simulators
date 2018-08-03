@@ -45,6 +45,16 @@ public class Door : MonoBehaviour {
 
 		transform.localRotation = Quaternion.identity;
 		transform.localScale = Vector3.one;
-		transform.localPosition = new Vector3(localX, 0, transform.localPosition.z);
+		transform.localPosition = new Vector3(localX, 0, 0);
+	}
+
+	public void ClampedManualUpdate(float newWidth, float newHeight) {
+		if (wall != null) {
+			width = Mathf.Clamp(newWidth, 0, wall.width);
+			height = Mathf.Clamp(newHeight, 0, wall.height);
+		} else {
+			width = newWidth;
+			height = newHeight;
+		}
 	}
 }

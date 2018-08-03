@@ -410,8 +410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46a9a847f9ff834fb3de5e8657427cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 1.0143443
-  height: 2.5109415
+  width: 0.8439772
+  height: 2.3967404
 --- !u!4 &313028038
 Transform:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 313028036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: 0, z: 0.56}
+  m_LocalPosition: {x: 3.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1466557127}
@@ -441,8 +441,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 8
     localAABB:
-      m_Center: {x: 2.2157571, y: 1.7575953, z: 0.28}
-      m_Extent: {x: 2.2157571, y: 1.7575953, z: 0.28}
+      m_Center: {x: 2.2157571, y: 1.7575953, z: 0}
+      m_Extent: {x: 2.2157571, y: 1.7575953, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
@@ -518,7 +518,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 256
-    _typelessdata: 000000000000000000000000db33a83e000000008bca71bf0000000000000000f7ce8d4000000000000000002e8c97be000000005f8774bf0000803f0000000000000000e2f8604000000000f1433e3ee7dc6fbe374a74bf000000000000803ff7ce8d40e2f8604000000000080123be1a887cbe37b974bf0000803f0000803f7b14ce3f00000000295c0f3fdb33a83e000000008bca71bf000000000000000042f5274000000000295c0f3f2f8c97be000000005f8774bf00000000000000007b14ce3f44b32040295c0f3faa2e5a3e432c45be553775bf000000000000000042f5274044b32040295c0f3f5d718bbeddc53bbd070b76bf0000000000000000
+    _typelessdata: 0000000000000000000000000000000000000000000080bf0000000000000000f7ce8d4000000000000000000000000000000000ffff7fbf0000803f0000000000000000e2f86040000000000000000000000000000080bf000000000000803ff7ce8d40e2f86040000000000000000000000000000080bf0000803f0000803f8fc2454000000000000000000000000000000000000080bf000000000000000048c67b4000000000000000000000000000000000000080bf00000000000000008fc2454032641940000000000000000000000000000080bf000000000000000048c67b4032641940000000000000000000000000000080bf0000000000000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -1631,14 +1631,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1466557122}
-  m_LocalRotation: {x: 0, y: -0.16995147, z: 0, w: 0.9854524}
-  m_LocalPosition: {x: -12.45, y: -0.74, z: -0.92}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.07, y: -0.74, z: -0.92}
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children:
   - {fileID: 313028038}
   m_Father: {fileID: 0}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: -19.57, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1737350041
 Prefab:
   m_ObjectHideFlags: 0
