@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
 
 [ExecuteInEditMode]
 public class Wall : MonoBehaviour {
@@ -10,6 +12,8 @@ public class Wall : MonoBehaviour {
 	//probably add options for features like doors and windows later
 
 	private Door[] doors;
+
+	private float[] sortedX, sortedY;
 
 
 	private MeshFilter mf;
@@ -96,9 +100,58 @@ public class Wall : MonoBehaviour {
 		Vector3[] verts = new Vector3[4];
 	
 		ArrayList tempVertList = new ArrayList();
+		List<float> splitListX = new List<float>();
+		List<float> splitListY = new List<float>();
+
 		doors = transform.GetComponentsInChildren<Door>();
 		if (doors.Length > 0) {
 			Debug.Log("DOORS");
+
+				splitListX.Add(0);
+				splitListX.Add(tRight.x);
+				splitListY.Add(0);
+				splitListY.Add(tRight.y);
+			foreach(Door door in doors) {
+				splitListX.Add(door.transform.localPosition.x);
+				splitListX.Add(door.transform.localPosition.x + door.width);
+				splitListY.Add(door.transform.localPosition.y);
+				splitListY.Add(door.transform.localPosition.y + door.height);
+
+			}
+			sortedX = splitListX.Distinct().ToArray();
+			System.Array.Sort(sortedX);
+			sortedY = splitListY.Distinct().ToArray();
+			System.Array.Sort(sortedY);
+
+			Debug.Log("X count: " + sortedX.Length);
+		
+			
+			Debug.Log("X's: " + string.Join(", ", sortedX.Select(f => f.ToString()).ToArray()));
+		
+			Debug.Log("Y count: " + sortedY.Length);
+			Debug.Log("Y's: " +string.Join(", ", sortedY.Select(f => f.ToString()).ToArray()));
+
+			//generate vert array now
+
+			int vertNum = 0;
+			int numVerts = sortedX.Length*sortedY.Length;
+			verts = new Vector3[((sortedX.Length)*(sortedY.Length))];
+			for(int row = 0; row < sortedY.Length; row++) {
+				for (int col = 0; col < sortedX.Length; col++) {
+					verts[vertNum] = new Vector3(sortedX[col], sortedY[row]);
+					Debug.Log(verts[vertNum]);
+					if (vertNum >= 1) {
+						Debug.DrawLine(verts[vertNum-1], verts[vertNum], Color.red, 0);
+					}
+					vertNum++;
+					
+				}
+			}
+			Debug.Log("TOTL VERTS" + vertNum);
+			mesh.vertices = verts;
+			return;
+
+			/*
 			//add one for windows later
 			tempVertList.Add(bLeft);
 			SortDoors();
@@ -143,6 +196,7 @@ public class Wall : MonoBehaviour {
 			verts = (Vector3[])tempVertList.ToArray(typeof(Vector3));
 			mesh.vertices = verts;
 			return;
+			*/
 		}
 
 		
@@ -181,16 +235,17 @@ public class Wall : MonoBehaviour {
 			tris[4] = 3;
 			tris[5] = 1;
 		} else {
-			int faceColumnCount = 2*doors.Length + 1;
-			int lineColumnCount = faceColumnCount + 1;
-			int faceRowCount = 2;
+			int faceColumnCount = sortedX.Length-1;
+			int lineColumnCount = faceColumnCount + 1; //4
+			int faceRowCount = sortedY.Length-1;
+			Debug.Log("Face row count: " + faceRowCount);
 			int lineRowCount = faceRowCount + 1;
 
-			int triVertCount = (faceColumnCount * faceRowCount - doors.Length)*2*3;
+			int triVertCount = (sortedX.Length-1)*(sortedY.Length-1)*2*3 - doors.Length*2*3;
 			Debug.Log(triVertCount);
 			tris = new int[triVertCount];
 			int triVertNum = 0;
-			for (int lineRow = 0; lineRow < 2; lineRow++) {
+			for (int lineRow = 0; lineRow < faceRowCount; lineRow++) {
 				for (int lineCol = 0; lineCol < faceColumnCount; lineCol++) {
 					if(lineCol%2 == 0 || lineRow != 0) { // we skip odd ones
 						//bot left tri
@@ -213,6 +268,18 @@ public class Wall : MonoBehaviour {
 						triVertNum++;
 						tris[triVertNum] = botRight;
 						triVertNum++;
+
+						Vector3[] v = mesh.vertices;
+
+						Vector3[] lines = new Vector3[]{v[botLeft], v[topLeft], v[botRight], v[botRight], v[topLeft], v[topRight]};
+
+						Debug.DrawLine(lines[0], lines[1], Color.white, 0);
+						Debug.DrawLine(lines[1], lines[2], Color.white, 0);
+						Debug.DrawLine(lines[0], lines[2], Color.white, 0);
+						Debug.DrawLine(lines[3], lines[4], Color.white, 0);
+						Debug.DrawLine(lines[4], lines[5], Color.white, 0);
+						Debug.DrawLine(lines[5], lines[3], Color.white, 0);
+
 
 						Debug.Log("Bottom Leftt tri: (" + botLeft + ", " + topLeft + ", " + botRight + ")");
 						Debug.Log("Top right tri: (" + botRight + ", " + topLeft + ", " + topRight + ")");

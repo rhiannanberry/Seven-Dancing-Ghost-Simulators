@@ -10,6 +10,9 @@ public class Door : MonoBehaviour {
 	//wall "start position" represented by the gameobject position
 	//probably add options for features like doors and windows later
 
+	//for excluding verts from wall mesh
+	public int[] vertexIndices;
+
 	private Wall wall;
 
 	private MeshFilter mf;
