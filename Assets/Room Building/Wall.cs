@@ -15,6 +15,7 @@ public class Wall : MonoBehaviour {
 
 	private float[] sortedX, sortedY;
 	Vertex[] vertz;
+	Vertex[] origVertz;
 
 
 	private MeshFilter mf;
@@ -106,6 +107,7 @@ public class Wall : MonoBehaviour {
 		List<float> splitListX = new List<float>();
 		List<float> splitListY = new List<float>();
 
+		
 		xVertices.Add(new Vertex(bLeft));
 		xVertices.Add(new Vertex(bRight));
 		yVertices.Add(new Vertex(bLeft));
@@ -114,12 +116,21 @@ public class Wall : MonoBehaviour {
 		doors = transform.GetComponentsInChildren<Door>();
 		int id = 0;
 		if (doors.Length > 0) {
+			List<Vertex> origList = new List<Vertex>();
+
 			Debug.Log("DOORS");
 				splitListX.Add(0);
 				splitListX.Add(tRight.x);
 				splitListY.Add(0);
 				splitListY.Add(tRight.y);
 			foreach(Door door in doors) {
+				Vector3 botLeftDoor = new Vector3(door.transform.localPosition.x, door.transform.localPosition.y);
+				Vector3 topRightDoor = new Vector3((door.transform.localPosition.x+door.width), door.transform.localPosition.y+door.height);
+				origList.Add(new Vertex(botLeftDoor, id, VertexType.Door));
+				origList.Add(new Vertex(topRightDoor, id, VertexType.Door));
+
+				Debug.Log("Orig list inner count: " + origList.Count);
+
 				xVertices.Add(new Vertex(door.transform.localPosition.x*Vector3.right, id, VertexType.Door, VertexType.Wall));
 				xVertices.Add(new Vertex((door.transform.localPosition.x+door.width)*Vector3.right, id, VertexType.Door, VertexType.Wall));
 				yVertices.Add(new Vertex(door.transform.localPosition.y*Vector3.up, id, VertexType.Door, VertexType.Wall));
@@ -131,14 +142,19 @@ public class Wall : MonoBehaviour {
 				splitListY.Add(door.transform.localPosition.y + door.height);
 
 			}
+			
+			origVertz = origList.ToArray();
+			Debug.Log("DOOR VERTICES " + origVertz.Length);
+			
 			sortedX = splitListX.Distinct().ToArray();
 			System.Array.Sort(sortedX);
 			sortedY = splitListY.Distinct().ToArray();
 			System.Array.Sort(sortedY);
 
-			vertz = Vertex.MergeDistinct(xVertices, yVertices);
-
+			vertz = Vertex.MergeDistinct(xVertices, yVertices, origList);
+			
 			Debug.Log("VERTICES: " + vertz.Length);
+			
 			string strng = "";
 			foreach(Vertex v in vertz) {
 				strng += "\n" + v.ToString();
@@ -234,18 +250,47 @@ public class Wall : MonoBehaviour {
 					bool doorDiag = vertz[botRight].door && vertz[topLeft].door;
 					bool windowDiag = vertz[botRight].window && vertz[topLeft].window;
 
-					if (!(doorDiag && vertz[botLeft].door) && !(windowDiag && vertz[botLeft].window)) {
+					Vector3 blPos = vertz[botLeft].position;
+					Vector3 trPos = vertz[topRight].position;
+
+					Debug.Log("Actual square: " + blPos + ", " + trPos);
+					Debug.Log("Orig list count: " + origVertz.Length);
+					//test the botRight and topLeft
+
+					bool insideDoor = false;
+
+					for(int i = 0; i < origVertz.Length-1; i++) {
+						
+						Vector3 blRange = origVertz[i].position;
+						Vector3 trRange = origVertz[i+1].position;
+
+						Debug.Log("Door square: " + blRange + ", " + trRange);
+
+						if ((blPos.x >= blRange.x && blPos.x <= trRange.x) && (blPos.y >= blRange.y && blPos.y <= trRange.y)) {
+							if ((trPos.x >= blRange.x && trPos.x <= trRange.x) && (trPos.y >= blRange.y && trPos.y <= trRange.y)) {
+								insideDoor = true;
+							}
+						}
+						if (insideDoor) {
+							break;
+						}
+						//if both points are >= origlist[i] amd <= origlist[i+1]
+						//your insider a door
+					}
+					if (!insideDoor) {
+					//if (!(doorDiag && vertz[botLeft].door) && !(windowDiag && vertz[botLeft].window)) {
 						//include bottom tri
 						triList.Add(botLeft);
 						triList.Add(topLeft);
 						triList.Add(botRight);
-					}
+					//}
 
-					if (!(doorDiag && vertz[topRight].door) && !(windowDiag && vertz[topRight].window)) {
+					//if (!(doorDiag && vertz[topRight].door) && !(windowDiag && vertz[topRight].window)) {
 						//include top tri 
 						triList.Add(topLeft);
 						triList.Add(topRight);
 						triList.Add(botRight);
+					//}
 					}
 
 

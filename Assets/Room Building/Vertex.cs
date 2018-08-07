@@ -8,7 +8,7 @@ using System;
 public enum VertexType {Wall, Door, Window};
 
 public class Vertex {
-    Vector3 position;
+    public Vector3 position;
     public bool wall = false, door = false, window = false;
 
     public int id;
@@ -63,7 +63,7 @@ public class Vertex {
         return vt.ToArray();
     }
 
-    public static Vertex[] MergeDistinct(List<Vertex> xList, List<Vertex> yList) {
+    public static Vertex[] MergeDistinct(List<Vertex> xList, List<Vertex> yList, List<Vertex> origVertList) {
         Vertex[] xDistinct = Vertex.GetDistinct(xList);
         
         string xstr = "X Sorted: \n";
@@ -79,7 +79,7 @@ public class Vertex {
             ystr += vy.ToString() + "\n";
         }
         Debug.Log(ystr);
-        return Vertex.GetMerged(xDistinct, yDistinct);
+        return Vertex.GetMerged(xDistinct, yDistinct, origVertList);
     }
 
     public static Vertex[] GetDistinct(List<Vertex> list) {
@@ -102,16 +102,29 @@ public class Vertex {
         return Vertex.Sort(distinctList);
     }
 
-    public static Vertex[] GetMerged(Vertex[] x, Vertex[] y) {
+    public static Vertex[] GetMerged(Vertex[] x, Vertex[] y, List<Vertex> origVertList) {
         List<Vertex> merged = new List<Vertex>();
         foreach (Vertex yv in y) {
             foreach (Vertex xv in x) {
+                Vertex origUsed = null;
                 Vertex newV = new Vertex(new Vector3(xv.position.x, yv.position.y), 0, xv.GetVertexTypes());
-                newV.wall = (newV.wall && yv.wall);
-                newV.door = (newV.door && yv.door);
-                newV.window = (newV.window && yv.window);
+                foreach(Vertex v in origVertList) {
+                    if (v.position == newV.position) {
+                        origUsed = v;
+                        break;
+                    }
+                }
+                if (origUsed == null) {
+                    newV.wall = (newV.wall && yv.wall);
+                    newV.door = (newV.door && yv.door);
+                    newV.window = (newV.window && yv.window);
+                    merged.Add(newV);
+                } else {
+                    origVertList.Remove(origUsed);
+                    merged.Add(origUsed);
+
+                }
                 
-                merged.Add(newV);
             }
         }
         return merged.ToArray();
