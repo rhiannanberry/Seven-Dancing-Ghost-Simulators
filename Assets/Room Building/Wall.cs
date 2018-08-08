@@ -147,15 +147,15 @@ public class Wall : MonoBehaviour {
 			foreach(Window window in windows) {
 				Vector3 botLeftDoor = new Vector3(window.transform.localPosition.x, window.transform.localPosition.y);
 				Vector3 topRightDoor = new Vector3((window.transform.localPosition.x+window.width), window.transform.localPosition.y+window.height);
-				origList.Add(new Vertex(botLeftDoor, id, VertexType.Door));
-				origList.Add(new Vertex(topRightDoor, id, VertexType.Door));
+				origList.Add(new Vertex(botLeftDoor, id, VertexType.Window));
+				origList.Add(new Vertex(topRightDoor, id, VertexType.Window));
 
 				Debug.Log("Orig list inner count: " + origList.Count);
 
-				xVertices.Add(new Vertex(window.transform.localPosition.x*Vector3.right, id, VertexType.Door, VertexType.Wall));
-				xVertices.Add(new Vertex((window.transform.localPosition.x+window.width)*Vector3.right, id, VertexType.Door, VertexType.Wall));
-				yVertices.Add(new Vertex(window.transform.localPosition.y*Vector3.up, id, VertexType.Door, VertexType.Wall));
-				yVertices.Add(new Vertex((window.transform.localPosition.y+window.height)*Vector3.up, id, VertexType.Door, VertexType.Wall));
+				xVertices.Add(new Vertex(window.transform.localPosition.x*Vector3.right, id, VertexType.Window, VertexType.Wall));
+				xVertices.Add(new Vertex((window.transform.localPosition.x+window.width)*Vector3.right, id, VertexType.Window, VertexType.Wall));
+				yVertices.Add(new Vertex(window.transform.localPosition.y*Vector3.up, id, VertexType.Window, VertexType.Wall));
+				yVertices.Add(new Vertex((window.transform.localPosition.y+window.height)*Vector3.up, id, VertexType.Window, VertexType.Wall));
 				id++;
 				splitListX.Add(window.transform.localPosition.x);
 				splitListX.Add(window.transform.localPosition.x + window.width);
@@ -175,14 +175,14 @@ public class Wall : MonoBehaviour {
 			vertz = Vertex.MergeDistinct(xVertices, yVertices, origList);
 			
 			Debug.Log("VERTICES: " + vertz.Length);
-			
+			/*
 			string strng = "";
 			foreach(Vertex v in vertz) {
 				strng += "\n" + v.ToString();
 			}
 
 			Debug.Log(strng);
-
+			*/
 			verts = Vertex.GetPositionArray(vertz);
 			
 			mesh.vertices = verts;
@@ -232,7 +232,7 @@ public class Wall : MonoBehaviour {
 			Debug.Log("Face row count: " + faceRowCount);
 			int lineRowCount = faceRowCount + 1;
 
-			int triVertCount = (sortedX.Length-1)*(sortedY.Length-1)*2*3 - doors.Length*2*3;
+			int triVertCount = (sortedX.Length-1)*(sortedY.Length-1)*2*3 - doors.Length*2*3 - windows.Length*2*3;
 			Debug.Log(triVertCount);
 			tris = new int[triVertCount];
 			
@@ -250,22 +250,18 @@ public class Wall : MonoBehaviour {
 					Vector3 blPos = vertz[botLeft].position;
 					Vector3 trPos = vertz[topRight].position;
 
-					Debug.Log("Actual square: " + blPos + ", " + trPos);
-					Debug.Log("Orig list count: " + origVertz.Length);
-					//test the botRight and topLeft
-
 					bool insideDoor = false;
 
-					for(int i = 0; i < origVertz.Length-1; i++) {
+					for(int i = 0; i < origVertz.Length-1; i+=2) {
 						
 						Vector3 blRange = origVertz[i].position;
 						Vector3 trRange = origVertz[i+1].position;
 
-						Debug.Log("Door square: " + blRange + ", " + trRange);
-
 						if ((blPos.x >= blRange.x && blPos.x <= trRange.x) && (blPos.y >= blRange.y && blPos.y <= trRange.y)) {
 							if ((trPos.x >= blRange.x && trPos.x <= trRange.x) && (trPos.y >= blRange.y && trPos.y <= trRange.y)) {
 								insideDoor = true;
+								Debug.Log("Actual square: " + blPos + ", " + trPos);
+								Debug.Log("Door square: " + blRange + ", " + trRange);
 							}
 						}
 						if (insideDoor) {
@@ -275,19 +271,15 @@ public class Wall : MonoBehaviour {
 						//your insider a door
 					}
 					if (!insideDoor) {
-					//if (!(doorDiag && vertz[botLeft].door) && !(windowDiag && vertz[botLeft].window)) {
 						//include bottom tri
 						triList.Add(botLeft);
 						triList.Add(topLeft);
 						triList.Add(botRight);
-					//}
 
-					//if (!(doorDiag && vertz[topRight].door) && !(windowDiag && vertz[topRight].window)) {
 						//include top tri 
 						triList.Add(topLeft);
 						triList.Add(topRight);
 						triList.Add(botRight);
-					//}
 					}
 
 
@@ -352,6 +344,7 @@ public class Wall : MonoBehaviour {
 
 		}
 		mesh.normals = norms;	
+		mesh.RecalculateNormals();
 	}
 
 	private void SortDoors() {
