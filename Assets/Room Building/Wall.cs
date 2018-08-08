@@ -10,6 +10,7 @@ public class Wall : MonoBehaviour {
 	//Add list of 
 	//wall "start position" represented by the gameobject position
 	//probably add options for features like doors and windows later
+	public GameObject baseboard;
 
 	private Door[] doors;
 	private Window[] windows;
@@ -18,6 +19,7 @@ public class Wall : MonoBehaviour {
 	Vertex[] vertz;
 	Vertex[] origVertz;
 
+	float[] doorBottoms;
 
 	private MeshFilter mf;
 	private Mesh mesh;
@@ -53,6 +55,7 @@ public class Wall : MonoBehaviour {
 		UpdateVertices();
 		UpdateTris();
 		UpdateNormals();
+		//UpdateBaseBoard();
 	}
 
 	private void GenerateNewMesh() {
@@ -144,6 +147,8 @@ public class Wall : MonoBehaviour {
 
 			}
 
+			doorBottoms = splitListX.ToArray();
+
 			foreach(Window window in windows) {
 				Vector3 botLeftDoor = new Vector3(window.transform.localPosition.x, window.transform.localPosition.y);
 				Vector3 topRightDoor = new Vector3((window.transform.localPosition.x+window.width), window.transform.localPosition.y+window.height);
@@ -184,8 +189,13 @@ public class Wall : MonoBehaviour {
 			Debug.Log(strng);
 			*/
 			verts = Vertex.GetPositionArray(vertz);
-			
+
+			Vector2[] uv = new Vector2[verts.Length];
+			for(int i = 0; i < verts.Length; i++) {
+				uv[i] = verts[i];
+			}
 			mesh.vertices = verts;
+			mesh.uv = uv;
 			return;
 		}
 
@@ -249,6 +259,8 @@ public class Wall : MonoBehaviour {
 
 					Vector3 blPos = vertz[botLeft].position;
 					Vector3 trPos = vertz[topRight].position;
+					Vector3 brPos = vertz[botRight].position;
+					Vector3 tlPos = vertz[topLeft].position;
 
 					bool insideDoor = false;
 
@@ -271,6 +283,17 @@ public class Wall : MonoBehaviour {
 						//your insider a door
 					}
 					if (!insideDoor) {
+						Vector3 ttl = transform.TransformPoint(tlPos);
+						Vector3 ttr = transform.TransformPoint(trPos);
+						Vector3 tbl = transform.TransformPoint(blPos);
+						Vector3 tbr = transform.TransformPoint(brPos);
+						Color clr = new Color(1,1,1,0.25f);
+						Debug.DrawLine(tbl, ttl, clr, 0);
+						Debug.DrawLine(ttl, tbr, clr, 0);
+						Debug.DrawLine(tbr, tbl, clr, 0);
+						Debug.DrawLine(ttl, ttr, clr, 0);
+						Debug.DrawLine(ttr, tbr, clr, 0);
+						
 						//include bottom tri
 						triList.Add(botLeft);
 						triList.Add(topLeft);
@@ -345,6 +368,14 @@ public class Wall : MonoBehaviour {
 		}
 		mesh.normals = norms;	
 		mesh.RecalculateNormals();
+	}
+
+	private void UpdateBaseBoard() {
+		if (doorBottoms.Length > 0) {
+			GameObject baseboard = GameObject.Find("Baseboard");
+			Vector3 bpos = baseboard.transform.localScale;
+			baseboard.transform.localScale = new Vector3(width, 1, 1);
+		}
 	}
 
 	private void SortDoors() {
