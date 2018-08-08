@@ -12,6 +12,7 @@ public class Wall : MonoBehaviour {
 	//probably add options for features like doors and windows later
 
 	private Door[] doors;
+	private Window[] windows;
 
 	private float[] sortedX, sortedY;
 	Vertex[] vertz;
@@ -114,11 +115,11 @@ public class Wall : MonoBehaviour {
 		yVertices.Add(new Vertex(tLeft));
 
 		doors = transform.GetComponentsInChildren<Door>();
+		windows = transform.GetComponentsInChildren<Window>();
 		int id = 0;
-		if (doors.Length > 0) {
-			List<Vertex> origList = new List<Vertex>();
-
-			Debug.Log("DOORS");
+		List<Vertex> origList = new List<Vertex>();
+		if (doors.Length > 0 || windows.Length > 0) {
+			Debug.Log("DOORS OR WINDOWS");
 				splitListX.Add(0);
 				splitListX.Add(tRight.x);
 				splitListY.Add(0);
@@ -142,6 +143,26 @@ public class Wall : MonoBehaviour {
 				splitListY.Add(door.transform.localPosition.y + door.height);
 
 			}
+
+			foreach(Window window in windows) {
+				Vector3 botLeftDoor = new Vector3(window.transform.localPosition.x, window.transform.localPosition.y);
+				Vector3 topRightDoor = new Vector3((window.transform.localPosition.x+window.width), window.transform.localPosition.y+window.height);
+				origList.Add(new Vertex(botLeftDoor, id, VertexType.Door));
+				origList.Add(new Vertex(topRightDoor, id, VertexType.Door));
+
+				Debug.Log("Orig list inner count: " + origList.Count);
+
+				xVertices.Add(new Vertex(window.transform.localPosition.x*Vector3.right, id, VertexType.Door, VertexType.Wall));
+				xVertices.Add(new Vertex((window.transform.localPosition.x+window.width)*Vector3.right, id, VertexType.Door, VertexType.Wall));
+				yVertices.Add(new Vertex(window.transform.localPosition.y*Vector3.up, id, VertexType.Door, VertexType.Wall));
+				yVertices.Add(new Vertex((window.transform.localPosition.y+window.height)*Vector3.up, id, VertexType.Door, VertexType.Wall));
+				id++;
+				splitListX.Add(window.transform.localPosition.x);
+				splitListX.Add(window.transform.localPosition.x + window.width);
+				splitListY.Add(window.transform.localPosition.y);
+				splitListY.Add(window.transform.localPosition.y + window.height);
+
+			}
 			
 			origVertz = origList.ToArray();
 			Debug.Log("DOOR VERTICES " + origVertz.Length);
@@ -162,37 +183,13 @@ public class Wall : MonoBehaviour {
 
 			Debug.Log(strng);
 
-
-			Debug.Log("X count: " + sortedX.Length);
-		
+			verts = Vertex.GetPositionArray(vertz);
 			
-			Debug.Log("X's: " + string.Join(", ", sortedX.Select(f => f.ToString()).ToArray()));
-		
-			Debug.Log("Y count: " + sortedY.Length);
-			Debug.Log("Y's: " +string.Join(", ", sortedY.Select(f => f.ToString()).ToArray()));
-
-			//generate vert array now
-
-			int vertNum = 0;
-			int numVerts = sortedX.Length*sortedY.Length;
-			verts = new Vector3[((sortedX.Length)*(sortedY.Length))];
-			for(int row = 0; row < sortedY.Length; row++) {
-				for (int col = 0; col < sortedX.Length; col++) {
-					verts[vertNum] = new Vector3(sortedX[col], sortedY[row]);
-					Debug.Log(verts[vertNum]);
-					if (vertNum >= 1) {
-						Debug.DrawLine(verts[vertNum-1], verts[vertNum], Color.red, 0);
-					}
-					vertNum++;
-					
-				}
-			}
-			Debug.Log("TOTL VERTS" + vertNum);
 			mesh.vertices = verts;
 			return;
 		}
 
-		
+		/*
 	
 		verts[0] = bLeft;
 		verts[1] = bRight;
@@ -214,7 +211,7 @@ public class Wall : MonoBehaviour {
 			verts[7] = new Vector3(widthClamped, heightClamped);
 		}
 		
-		mesh.vertices = verts;
+		mesh.vertices = verts;*/
 	}
 
 	private void UpdateTris() {

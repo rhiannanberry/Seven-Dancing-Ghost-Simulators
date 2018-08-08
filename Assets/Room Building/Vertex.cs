@@ -159,4 +159,12 @@ public class Vertex {
         str += " }";
         return str;
     }
+
+    public static Vector3[] GetPositionArray(Vertex[] vertArr) {
+        Vector3[] vArr = new Vector3[vertArr.Length];
+        for(int i = 0; i < vertArr.Length; i++) {
+            vArr[i] = vertArr[i].position;
+        }
+        return vArr;
+    }
 }
