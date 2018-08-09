@@ -12,14 +12,14 @@ public class Wall : MonoBehaviour {
 	//probably add options for features like doors and windows later
 	public GameObject baseboard;
 
-	private Door[] doors;
+	public Door[] doors;
 	private Window[] windows;
 
 	private float[] sortedX, sortedY;
 	Vertex[] vertz;
 	Vertex[] origVertz;
 
-	float[] doorBottoms;
+	public float[] doorBottoms;
 
 	private MeshFilter mf;
 	private Mesh mesh;
@@ -42,7 +42,6 @@ public class Wall : MonoBehaviour {
 	{
 		if (mf == null) {
 			mf = GetComponent<MeshFilter>();
-			Debug.Log("TEST");
 		}
 
 		if (mf.sharedMesh == null) {
@@ -55,7 +54,7 @@ public class Wall : MonoBehaviour {
 		UpdateVertices();
 		UpdateTris();
 		UpdateNormals();
-		//UpdateBaseBoard();
+		UpdateBaseboard();
 	}
 
 	private void GenerateNewMesh() {
@@ -239,11 +238,9 @@ public class Wall : MonoBehaviour {
 			int faceColumnCount = sortedX.Length-1;
 			int lineColumnCount = faceColumnCount + 1; //4
 			int faceRowCount = sortedY.Length-1;
-			Debug.Log("Face row count: " + faceRowCount);
 			int lineRowCount = faceRowCount + 1;
 
 			int triVertCount = (sortedX.Length-1)*(sortedY.Length-1)*2*3 - doors.Length*2*3 - windows.Length*2*3;
-			Debug.Log(triVertCount);
 			tris = new int[triVertCount];
 			
 			int triVertNum = 0;
@@ -272,8 +269,8 @@ public class Wall : MonoBehaviour {
 						if ((blPos.x >= blRange.x && blPos.x <= trRange.x) && (blPos.y >= blRange.y && blPos.y <= trRange.y)) {
 							if ((trPos.x >= blRange.x && trPos.x <= trRange.x) && (trPos.y >= blRange.y && trPos.y <= trRange.y)) {
 								insideDoor = true;
-								Debug.Log("Actual square: " + blPos + ", " + trPos);
-								Debug.Log("Door square: " + blRange + ", " + trRange);
+							//	Debug.Log("Actual square: " + blPos + ", " + trPos);
+							//	Debug.Log("Door square: " + blRange + ", " + trRange);
 							}
 						}
 						if (insideDoor) {
@@ -371,26 +368,157 @@ public class Wall : MonoBehaviour {
 	}
 
 	private void UpdateBaseBoard() {
+		Mesh baseMesh = baseboard.GetComponent<MeshFilter>().sharedMesh;
+		int baseVCount = baseMesh.vertexCount;
+		Vector3[] bVerts = baseMesh.vertices;
+		int vertCount = baseVCount*2;
+
+		int wallVertCount = mesh.vertexCount;
+		int wallTriCount = mesh.triangles.Length;
+		
+		Vector3[] baseVerts = new Vector3[vertCount];
+
+		Debug.Log("BASEBOARD VERT COUNT: " + vertCount);
+
+
+		int endCapTriCount = baseVCount-2;
+		int tubeTriCount = 2*(baseVCount-1);
+		int numTris = 2*endCapTriCount + tubeTriCount;
+		int numTriVerts = numTris*3;
+
+		Debug.Log("NUM TRI Verts: " + numTriVerts);
+
+		int[] bbTris = new int[numTriVerts];
+
+		Matrix4x4 transMatrix = Matrix4x4.Translate(Vector3.right*width);
+		for(int i = 0; i<baseVCount; i++) {
+			baseVerts[i] = bVerts[i];
+			Vector3 translated = transMatrix.MultiplyPoint3x4(bVerts[i]);
+			//Vector3 translated = new Vector3(width, bVerts[i].y, bVerts[i].z);
+			baseVerts[i+baseVCount] = translated;
+		}
+
+		int tricnt = 0;
+		for(int i = 1; i < baseVCount-1; i++) {
+			
+			//tricnt++;
+			bbTris[tricnt++] = i;
+			bbTris[tricnt++] = 0;
+			//tricnt++;
+			bbTris[tricnt++] = i+1;
+			//tricnt++;
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[0]), transform.TransformPoint(baseVerts[i]), Color.green, 0);
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[i]), transform.TransformPoint(baseVerts[i+1]), Color.green, 0);
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[0]), transform.TransformPoint(baseVerts[i+1]), Color.green, 0);
+
+		}
+		
+		float div = 1.0f/vertCount;
+		float clr = 0;
+		for(int i = 0; i<vertCount-1; i++) {
+			clr += div;
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i]), transform.TransformPoint(baseVerts[i+1]), new Color(clr, clr, clr, 1), 0);
+
+		}
+
+		for(int i = 0; i < baseVCount-1; i++) {
+
+			bbTris[tricnt] = i + baseVCount;
+			tricnt++;
+			bbTris[tricnt] = i;
+			tricnt++;
+			bbTris[tricnt] = i+1;
+			tricnt++;
+
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i]), transform.TransformPoint(baseVerts[i+baseVCount]), Color.blue, 0);
+
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i + baseVCount]), transform.TransformPoint(baseVerts[i+1]), Color.blue, 0);
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i+1]), transform.TransformPoint(baseVerts[i]), Color.blue, 0);
+
+			bbTris[tricnt] = i + baseVCount;
+			tricnt++;
+			bbTris[tricnt] = i + 1;
+			tricnt++;
+			bbTris[tricnt] = i + baseVCount + 1;
+			tricnt++;
+
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i+baseVCount]), transform.TransformPoint(baseVerts[i+1]), Color.magenta, 0);
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i+1]), transform.TransformPoint(baseVerts[i+baseVCount+1]), Color.magenta, 0);
+			Debug.DrawLine(transform.TransformPoint(baseVerts[i+baseVCount+1]), transform.TransformPoint(baseVerts[i+baseVCount]), Color.magenta, 0);
+
+
+		}
+
+		for(int i = baseVCount+1; i < vertCount-1; i++) {
+			bbTris[tricnt] = baseVCount;
+			tricnt++;
+			bbTris[tricnt] = i;
+			tricnt++;
+			bbTris[tricnt] = i+1;
+			tricnt++;
+
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[baseVCount]), transform.TransformPoint(baseVerts[i]), Color.red, 0);
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[i]), transform.TransformPoint(baseVerts[i+1]), Color.red, 0);
+			//Debug.DrawLine(transform.TransformPoint(baseVerts[baseVCount]), transform.TransformPoint(baseVerts[i+1]), Color.red, 0);
+
+		}
+
+		//TEST:
+		mesh.triangles = bbTris;
+
+		mesh.vertices = baseVerts;
+		UpdateNormals();
+		Vector2[] uv = new Vector2[baseVCount];
+		for(int i = 0; i < baseVCount; i++) {
+			uv[i] = baseVerts[i];
+		}
+		//END TEST
+
+/*
+		Vector3[] newVertArray = new Vector3[wallVertCount + vertCount];
+		Debug.Log("WALL TRI COUNT: " + wallTriCount);
+
+		int[] newTriArray = new int[wallTriCount + numTriVerts];
+		for (int i = 0; i < wallVertCount; i++) {
+			newVertArray[i] = mesh.vertices[i];
+		}
+		for (int i = wallVertCount; i < wallVertCount+vertCount; i++) {
+			newVertArray[i] = baseVerts[i-wallVertCount];
+		}
+
+		for (int i = 0; i < wallTriCount; i++) {
+			newTriArray[i] = mesh.triangles[i];
+		}
+		for (int i = wallTriCount; i < wallTriCount+numTriVerts; i++) {
+			newTriArray[i] = bbTris[i-wallTriCount];
+		}
+
+		mesh.vertices = newVertArray;
+		mesh.triangles = newTriArray;
+
+		Debug.Log("VERTICES AFTER BASEBOARD: " + mesh.vertexCount);
+		Debug.Log("WALL TRI COUNT AFTER BASEBOARD: " + mesh.triangles.Length);
+
+		//mesh.RecalculateNormals();
+		UpdateNormals();
+
+		Vector2[] uv = new Vector2[wallVertCount + vertCount];
+		for(int i = 0; i < wallVertCount + vertCount; i++) {
+			uv[i] = newVertArray[i];
+		}
+*/
+		/*
 		if (doorBottoms.Length > 0) {
 			GameObject baseboard = GameObject.Find("Baseboard");
 			Vector3 bpos = baseboard.transform.localScale;
 			baseboard.transform.localScale = new Vector3(width, 1, 1);
 		}
+		*/
 	}
 
-	private void SortDoors() {
-		for(int i = 1; i < doors.Length; i++) {
-			for(int j = i-1; j >= 0; j--) {
-				if (doors[j+1].transform.localPosition.x < doors[j].transform.localPosition.x) {
-					//swap
-					Door temp = doors[j+1];
-					doors[j+1] = doors[j];
-					doors[j] = temp;
-				} else {
-					break;
-				}
-			}
-		}
+	private void UpdateBaseboard() {
+		Baseboard bb = GetComponentInChildren<Baseboard>();
+		bb.UpdateBaseboard();
 	}
 
 
