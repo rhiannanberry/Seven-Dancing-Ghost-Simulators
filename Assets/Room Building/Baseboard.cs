@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Baseboard : MonoBehaviour {
 	Wall wall;
+	MeshFilter meshFilter;
+	Mesh prefabMesh;
+	Mesh mesh;
+
+
 	public void UpdateBaseboard() {
 		/*
 		 *
@@ -12,9 +17,9 @@ public class Baseboard : MonoBehaviour {
 		 */
 
 		wall = GetComponentInParent<Wall>();
-		Mesh prefabMesh = wall.baseboard.GetComponent<MeshFilter>().sharedMesh;
-		MeshFilter meshFilter = GetComponent<MeshFilter>();
-		Mesh mesh = meshFilter.sharedMesh;
+		prefabMesh = wall.baseboard.GetComponent<MeshFilter>().sharedMesh;
+		meshFilter = GetComponent<MeshFilter>();
+		mesh = meshFilter.sharedMesh;
 
 		int prefVertexCount = prefabMesh.vertexCount;
 		Vector3[] prefVertices = prefabMesh.vertices;	//sillohuette of the baseboard
@@ -41,6 +46,7 @@ public class Baseboard : MonoBehaviour {
 		 * Update vertex array and UV array
 		 */
 
+		
 		//translation matrix just moves indiv. vertices like transform.Translate() does
 		Matrix4x4 transMatrix = Matrix4x4.Translate(Vector3.right*wall.width);
 		for (int i = 0; i < prefVertexCount; i++) {
@@ -93,6 +99,30 @@ public class Baseboard : MonoBehaviour {
 		mesh.uv = meshUVs;
 		mesh.RecalculateNormals();
 		Debugging();
+	}
+
+	private void GenerateVerticesAndUV() {
+		Matrix4x4[] transMatrices = new Matrix4x4[additionalLoopCount];
+		int loopCnt = 0;
+		for (int m = 0; m < wall.doors.Length; m++) {
+			transMatrices[loopCnt++] = Matrix4x4.Translate(Vector3.right*wall.doors[m].transform.localPosition.x);
+			transMatrices[loopCnt++] = Matrix4x4.Translate(Vector3.right*(wall.doors[m].transform.localPosition.x + wall.doors[m].width));
+		}
+		transMatrices[loopCnt++] = Matrix4x4.Translate(Vector3.right*(wall.width));
+
+		for (int i = 0; i < prefVertexCount; i++) {
+			meshVertices[i] = prefVertices[i];
+			meshUVs[i] = prefVertices[i];
+
+			int transCnt = 0;
+			foreach (Matrix4x4 matrix in transMatrices) {
+				transCnt += prefVertexCount;
+				Vector3 translation = matrix.MultiplyPoint3x4(prefVertices[i]);
+				meshVertices[i + transCnt] = translation;
+				meshUVs[i+ transCnt] = translation;
+			}	
+		}
+
 	}
 
 	private void Debugging() {
